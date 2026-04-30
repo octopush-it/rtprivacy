@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy — Retail Therapy</title>
+  <meta name="description" content="Retail Therapy is built privacy-first: no accounts, no cloud, no advertising, no third-party analytics. All app data stays on your device." />
+  <meta property="og:title" content="Privacy Policy — Retail Therapy" />
+  <meta property="og:description" content="Retail Therapy is built privacy-first: no accounts, no cloud, no advertising, no third-party analytics. All app data stays on your device." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:           #F5EFE3;
+      --bg-alt:       #EDE5D4;
+      --bg-card:      #FAF6EC;
+      --ink:          #2C231C;
+      --ink-soft:     #6B5E54;
+      --ink-quiet:    #A39689;
+      --rule:         #D8CFC2;
+      --accent:       #7A2D1C;
+      --accent-soft:  #C4602E;
+      --accent-bg:    rgba(122, 45, 28, 0.06);
+      --max-w:        46rem;
+      --serif:        'Cormorant Garamond', Georgia, serif;
+      --sans:         'Inter', -apple-system, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-soft); text-decoration: underline; }
+
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(245, 239, 227, 0.92);
+      backdrop-filter: saturate(140%) blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .site-header .inner {
+      max-width: 72rem; margin: 0 auto; padding: 1rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .wordmark {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .wordmark .ampersand { color: var(--accent); font-style: italic; }
+    .nav { display: flex; gap: 1.75rem; font-size: 0.9rem; color: var(--ink-soft); }
+    .nav a { color: var(--ink-soft); transition: color 0.15s ease; }
+    .nav a:hover { color: var(--accent); text-decoration: none; }
+    @media (max-width: 540px) { .nav { display: none; } }
+
+    main {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 5rem;
+    }
+
+    .page-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 1rem;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.25rem, 5vw, 3.25rem);
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      margin: 0 0 1rem;
+      color: var(--ink);
+    }
+    .effective {
+      color: var(--ink-quiet);
+      font-size: 0.92rem;
+      margin: 0 0 2.5rem;
+    }
+
+    .lede {
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      margin: 0 0 2.5rem;
+      line-height: 1.7;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3vw, 1.95rem);
+      line-height: 1.2;
+      font-weight: 500;
+      margin: 3rem 0 1rem;
+      color: var(--ink);
+    }
+    h2:first-of-type { margin-top: 2rem; }
+    p { margin: 0 0 1.25rem; color: var(--ink-soft); font-size: 1rem; }
+
+    ul {
+      margin: 0 0 1.5rem;
+      padding-left: 1.4rem;
+      color: var(--ink-soft);
+    }
+    ul li {
+      margin-bottom: 0.65rem;
+      line-height: 1.6;
+    }
+    ul li::marker { color: var(--accent-soft); }
+
+    .callout {
+      margin: 2rem 0;
+      padding: 1.5rem 1.75rem;
+      background: var(--bg-card);
+      border-left: 3px solid var(--accent);
+      border-radius: 0.4rem;
+    }
+    .callout p { margin: 0; color: var(--ink); }
+
+    .divider {
+      border: 0;
+      border-top: 1px solid var(--rule);
+      margin: 3rem 0;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .back-link svg { width: 0.95rem; height: 0.95rem; transform: rotate(180deg); }
+
+    footer.site-footer {
+      background: var(--ink);
+      color: rgba(245, 239, 227, 0.7);
+      padding: 3.5rem 1.5rem 2.5rem;
+    }
+    footer.site-footer .inner {
+      max-width: 72rem; margin: 0 auto;
+      display: grid; gap: 1.75rem;
+      grid-template-columns: 1fr;
+      align-items: center; text-align: center;
+    }
+    @media (min-width: 720px) {
+      footer.site-footer .inner {
+        grid-template-columns: auto 1fr auto;
+        text-align: left;
+      }
+    }
+    footer .wordmark { color: var(--bg); font-size: 1.35rem; }
+    footer .nav { justify-content: center; }
+    footer .nav a { color: rgba(245, 239, 227, 0.7); }
+    footer .nav a:hover { color: var(--accent-soft); }
+    footer .copyright { font-size: 0.78rem; letter-spacing: 0.04em; color: rgba(245, 239, 227, 0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- ============== HEADER ============== -->
+  <header class="site-header">
+    <div class="inner">
+      <a href="/" class="wordmark">Retail<span class="ampersand"> · </span>Therapy</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/#features">Features</a>
+        <a href="/#privacy">Privacy</a>
+        <a href="/privacy.html">Policy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <p class="page-eyebrow">Privacy Policy</p>
+    <h1>Privacy at Retail Therapy</h1>
+    <p class="effective">Effective date: <em>(fill in when published)</em></p>
+
+    <p class="lede">
+      Retail Therapy is a simulated shopping app. We've designed it to be one of the most privacy-respecting apps on the App Store: we don't ask for your personal information, we don't collect data about you, and we don't track you across apps or websites.
+    </p>
+
+    <hr class="divider" />
+
+    <h2>What we don't do</h2>
+    <ul>
+      <li>We do not ask you to create an account.</li>
+      <li>We do not ask for your name, email address, phone number, or any other personal information.</li>
+      <li>We do not have a backend server that stores your information.</li>
+      <li>We do not use any third-party analytics or advertising SDKs.</li>
+      <li>We do not display advertisements.</li>
+      <li>We do not track you across apps or websites.</li>
+      <li>We do not sell or share data — there is no data to sell or share.</li>
+    </ul>
+
+    <h2>What we do</h2>
+    <p><strong>All your activity is stored on your device only.</strong> Your wishlist, cart, order history, persona, and Retail Therapy Card simulation state are saved to your phone's local storage. They never leave your device.</p>
+
+    <p><strong>We serve product images from a content delivery network (Cloudflare R2).</strong> Like any website that loads images, your device's IP address is briefly visible to the CDN as part of the standard HTTPS request. We do not log, store, or analyze that IP. Cloudflare's standard CDN logging does not include personally identifying information beyond what's necessary to deliver the response, and we do not retain or query those logs ourselves.</p>
+
+    <p><strong>We send local notifications about your simulated orders.</strong> These are scheduled and delivered entirely on your device — no server is contacted to send them. You can disable them at any time in iOS Settings → Notifications → Retail Therapy.</p>
+
+    <div class="callout">
+      <p><strong>The credit card simulation is not a financial product.</strong> The "Retail Therapy Card" feature uses obviously-fake card numbers (Stripe's well-known 4242 test BIN) and a "DEMO" watermark on the card visual. It cannot be linked to a real bank, exchanged for real currency, or used outside this app. No real money is involved at any point.</p>
+    </div>
+
+    <h2>Data deletion</h2>
+    <p>Because no data leaves your device, "deletion" is simple: delete the app. All local state is removed automatically. There is no server-side data to request deletion of.</p>
+
+    <h2>Children</h2>
+    <p>Retail Therapy is rated 4+ and contains no content unsuitable for children. We do not knowingly collect data from children, because we do not collect data from anyone.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy? Email <a href="mailto:hello@example.com">hello@example.com</a>.</p>
+
+    <h2>Changes</h2>
+    <p>If this policy changes, we'll update the effective date above. The current version always lives at this URL.</p>
+
+    <a href="/" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      Back to Retail Therapy
+    </a>
+
+  </main>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="site-footer">
+    <div class="inner">
+      <a href="/" class="wordmark">Retail<span class="ampersand" style="color: var(--accent-soft);"> · </span>Therapy</a>
+      <nav class="nav" aria-label="Footer">
+        <a href="/">Home</a>
+        <a href="/#features">Features</a>
+        <a href="/#privacy">Privacy</a>
+        <a href="/privacy.html">Policy</a>
+      </nav>
+      <p class="copyright">© 2026 Tiny Robots</p>
+    </div>
+  </footer>
+
+</body>
+</html>

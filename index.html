@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Retail Therapy — Therapy through shopping. No bills.</title>
+  <meta name="description" content="A simulated shopping experience: browse a curated catalog, fill the cart, check out, watch the parcel ship — all without spending a cent or sharing a single byte." />
+  <meta property="og:title" content="Retail Therapy — Therapy through shopping. No bills." />
+  <meta property="og:description" content="A simulated shopping experience: browse a curated catalog, fill the cart, check out, watch the parcel ship — all without spending a cent or sharing a single byte." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ---------- tokens ---------- */
+    :root {
+      --bg:           #F5EFE3;       /* cream paper */
+      --bg-alt:       #EDE5D4;       /* deeper cream */
+      --bg-card:      #FAF6EC;       /* card-stock */
+      --ink:          #2C231C;       /* espresso */
+      --ink-soft:     #6B5E54;       /* warm gray */
+      --ink-quiet:    #A39689;       /* paper-soft gray */
+      --rule:         #D8CFC2;       /* hairline border */
+      --accent:       #7A2D1C;       /* atelier oxblood */
+      --accent-soft:  #C4602E;       /* terracotta */
+      --accent-bg:    rgba(122, 45, 28, 0.06);
+      --max-w:        72rem;
+      --serif:        'Cormorant Garamond', Georgia, serif;
+      --sans:         'Inter', -apple-system, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+
+    /* ---------- header ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(245, 239, 227, 0.92);
+      backdrop-filter: saturate(140%) blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .site-header .inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wordmark {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .wordmark .ampersand {
+      color: var(--accent);
+      font-style: italic;
+    }
+    .nav { display: flex; gap: 1.75rem; font-size: 0.9rem; color: var(--ink-soft); }
+    .nav a { transition: color 0.15s ease; }
+    .nav a:hover { color: var(--accent); }
+    @media (max-width: 540px) { .nav { display: none; } }
+
+    /* ---------- hero ---------- */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 6rem 1.5rem 5rem;
+      text-align: center;
+    }
+    .hero .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      background: var(--accent-bg);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(2.75rem, 6vw, 4.75rem);
+      line-height: 1.05;
+      margin: 0 0 1.5rem;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .hero h1 .accent {
+      color: var(--accent);
+      font-style: italic;
+    }
+    .hero .lede {
+      max-width: 38rem;
+      margin: 0 auto 2.5rem;
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.95rem 1.75rem;
+      background: var(--ink);
+      color: var(--bg);
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      border-radius: 999px;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .cta:hover { background: var(--accent); transform: translateY(-1px); }
+    .cta svg { width: 1.1rem; height: 1.1rem; }
+    .hero .device-mock {
+      max-width: 22rem;
+      margin: 4rem auto 0;
+      aspect-ratio: 9 / 19.5;
+      background: linear-gradient(160deg, #1f1812 0%, #2c231c 100%);
+      border-radius: 2.5rem;
+      box-shadow:
+        0 20px 60px -20px rgba(44, 35, 28, 0.25),
+        0 8px 24px -8px rgba(122, 45, 28, 0.10);
+      position: relative;
+      overflow: hidden;
+      padding: 0.55rem;
+    }
+    .hero .device-screen {
+      position: absolute;
+      inset: 0.55rem;
+      border-radius: 1.95rem;
+      background:
+        radial-gradient(circle at 30% 18%, rgba(196, 96, 46, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 75% 85%, rgba(122, 45, 28, 0.06) 0%, transparent 50%),
+        var(--bg-card);
+      padding: 0.85rem 0.85rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      overflow: hidden;
+      font-family: var(--sans);
+    }
+    .hero .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--ink);
+      padding: 0 0.4rem;
+      flex: 0 0 auto;
+    }
+    .hero .status-icons {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+    .hero .status-icons .signal,
+    .hero .status-icons .wifi,
+    .hero .status-icons .battery {
+      display: inline-block;
+      background: var(--ink);
+    }
+    .hero .status-icons .signal {
+      width: 0.7rem;
+      height: 0.5rem;
+      clip-path: polygon(0 70%, 25% 70%, 25% 50%, 50% 50%, 50% 25%, 75% 25%, 75% 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .hero .status-icons .wifi {
+      width: 0.65rem;
+      height: 0.5rem;
+      mask: radial-gradient(circle at 50% 100%, var(--ink) 30%, transparent 32%, var(--ink) 60%, transparent 62%, var(--ink) 90%, transparent 92%);
+      -webkit-mask: radial-gradient(circle at 50% 100%, var(--ink) 30%, transparent 32%, var(--ink) 60%, transparent 62%, var(--ink) 90%, transparent 92%);
+    }
+    .hero .status-icons .battery {
+      width: 1.1rem;
+      height: 0.55rem;
+      border-radius: 0.15rem;
+      background: var(--ink);
+      position: relative;
+    }
+    .hero .status-icons .battery::after {
+      content: '';
+      position: absolute;
+      right: -0.15rem;
+      top: 0.15rem;
+      bottom: 0.15rem;
+      width: 0.1rem;
+      background: var(--ink);
+      border-radius: 0 0.05rem 0.05rem 0;
+    }
+    .hero .app-header {
+      text-align: center;
+      padding: 0.25rem 0 0.15rem;
+      border-bottom: 1px solid var(--rule);
+      flex: 0 0 auto;
+    }
+    .hero .brand-mark {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--ink);
+      letter-spacing: 0.025em;
+      font-weight: 500;
+    }
+    .hero .brand-mark .dot { color: var(--accent); font-style: italic; }
+    .hero .hero-band {
+      flex: 0 0 auto;
+      height: 4.5rem;
+      border-radius: 0.55rem;
+      background:
+        linear-gradient(135deg, rgba(122, 45, 28, 0.12) 0%, transparent 60%),
+        linear-gradient(160deg, #c4a888 0%, #8a6a4a 50%, #6e4a32 100%);
+      box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.08);
+    }
+    .hero .rail-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 0.15rem 0.1rem 0.05rem;
+      flex: 0 0 auto;
+    }
+    .hero .tile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+      flex: 1 1 auto;
+      align-content: start;
+    }
+    .hero .tile {
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: 0.45rem;
+      padding: 0.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      min-width: 0;
+    }
+    .hero .tile-image {
+      height: 3rem;
+      border-radius: 0.3rem;
+      margin-bottom: 0.3rem;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.08);
+    }
+    .hero .tone-walnut    { background: linear-gradient(135deg, #6b4a2e 0%, #3a2618 100%); }
+    .hero .tone-cream     { background: linear-gradient(135deg, #f0e6d2 0%, #c9b691 100%); }
+    .hero .tone-copper    { background: linear-gradient(135deg, #c8854a 0%, #8a4a28 100%); }
+    .hero .tone-sage      { background: linear-gradient(135deg, #c4cbb0 0%, #6a7e5a 100%); }
+    .hero .tone-stoneware { background: linear-gradient(135deg, #e8dcc6 0%, #b8a888 100%); }
+    .hero .tone-oak       { background: linear-gradient(135deg, #d4b88a 0%, #8e6e44 100%); }
+    .hero .tile-brand {
+      font-size: 0.5rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ink-quiet);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hero .tile-name {
+      font-size: 0.6rem;
+      color: var(--ink);
+      font-weight: 500;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hero .tile-price {
+      font-size: 0.62rem;
+      font-family: var(--serif);
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .hero .device-mock-caption {
+      max-width: 22rem;
+      margin: 1rem auto 0;
+      font-size: 0.78rem;
+      color: var(--ink-quiet);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- generic section ---------- */
+    section.band {
+      padding: 5rem 1.5rem;
+    }
+    .band-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .band.alt { background: var(--bg-alt); border-block: 1px solid var(--rule); }
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 1rem;
+    }
+    .band h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 2.85rem);
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      margin: 0 0 1.5rem;
+      max-width: 38rem;
+    }
+    .band .lede {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      max-width: 42rem;
+      margin: 0;
+      line-height: 1.7;
+    }
+    .band .lede + .lede { margin-top: 1.25rem; }
+
+    /* ---------- features grid ---------- */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .feature {
+      padding: 2rem 1.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 1rem;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+    .feature:hover {
+      border-color: var(--accent-soft);
+      transform: translateY(-2px);
+    }
+    .feature .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.6rem;
+      background: var(--accent-bg);
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    .feature .icon svg { width: 1.25rem; height: 1.25rem; }
+    .feature h3 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin: 0 0 0.5rem;
+      color: var(--ink);
+    }
+    .feature p {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* ---------- privacy spotlight (deep band) ---------- */
+    .spotlight {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 5.5rem 1.5rem;
+      text-align: center;
+    }
+    .spotlight .eyebrow { color: var(--accent-soft); }
+    .spotlight h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 2.85rem);
+      line-height: 1.15;
+      font-weight: 500;
+      margin: 0 auto 1.5rem;
+      max-width: 36rem;
+      color: var(--bg);
+    }
+    .spotlight p {
+      max-width: 38rem;
+      margin: 0 auto 1.25rem;
+      color: rgba(245, 239, 227, 0.78);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    .spotlight .quiet-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      color: var(--accent-soft);
+      font-weight: 500;
+      border-bottom: 1px solid var(--accent-soft);
+      padding-bottom: 0.15rem;
+    }
+    .spotlight .quiet-link:hover { color: var(--bg); border-color: var(--bg); }
+
+    /* ---------- pillar list (no ads block) ---------- */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      gap: 2rem;
+      margin-top: 2.75rem;
+    }
+    .pillar h3 {
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      font-weight: 500;
+      margin: 0 0 0.6rem;
+      color: var(--ink);
+    }
+    .pillar p {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .pillar .marker {
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ---------- compliance strip ---------- */
+    .compliance {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      background: var(--bg-alt);
+      border-top: 1px solid var(--rule);
+    }
+    .compliance p {
+      color: var(--ink-soft);
+      margin: 0 0 1.25rem;
+      font-size: 0.9rem;
+    }
+    .compliance .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      justify-content: center;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-size: 0.9rem;
+      color: var(--ink);
+      font-weight: 500;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--accent); }
+    .pill svg { width: 0.9rem; height: 0.9rem; }
+
+    /* ---------- footer ---------- */
+    footer.site-footer {
+      background: var(--ink);
+      color: rgba(245, 239, 227, 0.7);
+      padding: 3.5rem 1.5rem 2.5rem;
+    }
+    footer.site-footer .inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      gap: 1.75rem;
+      grid-template-columns: 1fr;
+      align-items: center;
+      text-align: center;
+    }
+    @media (min-width: 720px) {
+      footer.site-footer .inner {
+        grid-template-columns: auto 1fr auto;
+        text-align: left;
+      }
+    }
+    footer .wordmark { color: var(--bg); font-size: 1.35rem; }
+    footer .nav a { color: rgba(245, 239, 227, 0.7); }
+    footer .nav a:hover { color: var(--accent-soft); }
+    footer .nav { justify-content: center; }
+    footer .copyright { font-size: 0.78rem; letter-spacing: 0.04em; color: rgba(245, 239, 227, 0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- ============== HEADER ============== -->
+  <header class="site-header">
+    <div class="inner">
+      <a href="/" class="wordmark">Retail<span class="ampersand"> · </span>Therapy</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
+        <a href="privacy.html">Policy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============== HERO ============== -->
+    <section class="hero">
+      <span class="badge">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+        Available on the App Store
+      </span>
+      <h1>Therapy <span class="accent">through</span> shopping.<br/>No bills.</h1>
+      <p class="lede">A simulated shopping experience — browse a curated boutique catalog, fill the cart, check out, watch the parcel ship — without spending a cent or sharing a single byte.</p>
+      <a href="https://apps.apple.com/" class="cta" rel="noopener noreferrer">
+        Download on the App Store
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+
+      <div class="device-mock" aria-hidden="true">
+        <div class="device-screen">
+          <div class="status-bar">
+            <span>9:41</span>
+            <div class="status-icons">
+              <span class="signal"></span>
+              <span class="wifi"></span>
+              <span class="battery"></span>
+            </div>
+          </div>
+          <div class="app-header">
+            <span class="brand-mark">Retail<span class="dot"> · </span>Therapy</span>
+          </div>
+          <div class="hero-band"></div>
+          <div class="rail-label">Just for you</div>
+          <div class="tile-grid">
+            <div class="tile">
+              <div class="tile-image tone-walnut"></div>
+              <div class="tile-brand">Halo Acoustics</div>
+              <div class="tile-name">Walnut Tube Amplifier</div>
+              <div class="tile-price">$1,180</div>
+            </div>
+            <div class="tile">
+              <div class="tile-image tone-cream"></div>
+              <div class="tile-brand">Field Notes Apothecary</div>
+              <div class="tile-name">Cedar Foot Soak</div>
+              <div class="tile-price">$24</div>
+            </div>
+            <div class="tile">
+              <div class="tile-image tone-copper"></div>
+              <div class="tile-brand">Hollow Bay Cookware</div>
+              <div class="tile-name">Patinated Saucepan</div>
+              <div class="tile-price">$245</div>
+            </div>
+            <div class="tile">
+              <div class="tile-image tone-sage"></div>
+              <div class="tile-brand">North Coast Games</div>
+              <div class="tile-name">Walnut Chess Set</div>
+              <div class="tile-price">$268</div>
+            </div>
+            <div class="tile">
+              <div class="tile-image tone-stoneware"></div>
+              <div class="tile-brand">Quiet Studio</div>
+              <div class="tile-name">Hand-thrown Mug</div>
+              <div class="tile-price">$34</div>
+            </div>
+            <div class="tile">
+              <div class="tile-image tone-oak"></div>
+              <div class="tile-brand">Pressed &amp; Patinated</div>
+              <div class="tile-name">Reclaimed Side Table</div>
+              <div class="tile-price">$385</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="device-mock-caption">A few moments with the catalog</p>
+    </section>
+
+    <!-- ============== ABOUT ============== -->
+    <section class="band">
+      <div class="band-inner">
+        <p class="eyebrow">What it is</p>
+        <h2>Online shopping, the ritual without the receipt.</h2>
+        <p class="lede">Open the app and you're handed a synthetic persona — a believable name, address, and demo card — so the checkout forms have something to fill them. Everything you'd be asked to enter on a real shopping site is already there, made up. The credit card is fake. The order is fake. The "delivery" is a sequence of polite local notifications about a parcel that doesn't exist.</p>
+        <p class="lede">Hundreds of products across apothecary, audio, kitchen, fashion, furniture, and more. Every product has a name, a brand, a price, photos, specs, and customer reviews — all generated, all clearly fictional. Filter by price, sort by rating, save favorites to a wishlist, browse editorial collections like "Cozy at home" or "First apartment."</p>
+      </div>
+    </section>
+
+    <!-- ============== FEATURES ============== -->
+    <section id="features" class="band alt">
+      <div class="band-inner">
+        <p class="eyebrow">Features</p>
+        <h2>Built for the pacing, not the purchase.</h2>
+        <p class="lede">Every detail is designed to extend the experience, not to monetize it. The small affordances that make a shopping site feel real are all here, working exactly the way they would on a site where the bag actually arrives at your door.</p>
+
+        <div class="features-grid">
+
+          <article class="feature">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <h3>A curated catalog</h3>
+            <p>Apothecary, audio &amp; hi-fi, kitchen, fashion, furniture, tabletop, makeup, games — hundreds of products, every one of them quietly considered. Browse by category, search, filter, sort.</p>
+          </article>
+
+          <article class="feature">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M8 6V4"/><path d="M16 6V4"/></svg></span>
+            <h3>The Retail Therapy Card</h3>
+            <p>Apply for a simulated store credit card, watch the brief review window, get approved. Charge orders against it, pay it down whenever, close it and apply again. No interest, no late fees, no real money.</p>
+          </article>
+
+          <article class="feature">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+            <h3>Slow-shipping simulation</h3>
+            <p>Orders move through real shipping stages — acknowledged, packed, in transit, out for delivery, delivered. Each milestone arrives as a polite local notification. The parcel doesn't exist; the pacing is the point.</p>
+          </article>
+
+          <article class="feature">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span>
+            <h3>A persona, not your name</h3>
+            <p>Auto-generated name, address, phone, demo card. The checkout forms are pre-filled and non-editable, so no real information can ever land in them. Reroll the persona whenever you'd like a different one.</p>
+          </article>
+
+          <article class="feature">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <h3>Wishlist &amp; collections</h3>
+            <p>Heart anything you'd come back to. Browse editorial collections — "First apartment," "Hi-fi starter kit," "Cozy at home," "Personal ritual" — that cut across the catalog the way a magazine spread would.</p>
+          </article>
+
+          <article class="feature">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+            <h3>Everything stays on your phone</h3>
+            <p>No account, no login, no cloud sync. Your wishlist, cart, persona, order history, card simulation — all stored locally. There's no server because there doesn't need to be.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== PRIVACY SPOTLIGHT ============== -->
+    <section id="privacy" class="spotlight">
+      <p class="eyebrow">Privacy by design</p>
+      <h2>Nothing about you ever leaves your phone.</h2>
+      <p>Retail Therapy is built privacy-first. There is no sign-up, no server, no cloud sync, no third-party analytics, no advertising network. Your wishlist, cart, persona, order history, and credit-card-simulation state are stored locally on your device. They never travel anywhere.</p>
+      <p>If you delete the app, every trace goes with it. Nothing is held server-side because nothing is collected server-side.</p>
+      <a href="privacy.html" class="quiet-link">
+        Read the full privacy policy
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </section>
+
+    <!-- ============== NO ADS / NO SELLING ============== -->
+    <section class="band">
+      <div class="band-inner">
+        <p class="eyebrow">No ads, ever</p>
+        <h2>There's nothing to sell — and we don't.</h2>
+        <p class="lede">Retail Therapy doesn't run advertising. It doesn't sell user information. It doesn't share data with brokers. There aren't sponsored products in the catalog or third-party tracking SDKs in the binary. The simulation is the entire product.</p>
+
+        <div class="pillars">
+          <div class="pillar">
+            <div class="marker"></div>
+            <h3>No advertising</h3>
+            <p>No banner ads, no sponsored placements, no affiliate links to outside retailers. The catalog is fictional and self-contained.</p>
+          </div>
+          <div class="pillar">
+            <div class="marker"></div>
+            <h3>No data sale</h3>
+            <p>Even if there were a market for "fake-shopping behavior," there's nothing to package — your activity never leaves the device.</p>
+          </div>
+          <div class="pillar">
+            <div class="marker"></div>
+            <h3>No tracking SDKs</h3>
+            <p>No analytics, no telemetry, no third-party libraries that phone home. The Privacy Nutrition Label reflects this: Data Not Collected.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== APP STORE COMPLIANCE STRIP ============== -->
+    <section class="compliance">
+      <p>For App Store compliance and reviewer reference:</p>
+      <div class="pill-row">
+        <a href="privacy.html" class="pill">
+          Privacy Policy
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+        <a href="mailto:hello@example.com" class="pill">
+          Contact
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="site-footer">
+    <div class="inner">
+      <a href="/" class="wordmark">Retail<span class="ampersand" style="color: var(--accent-soft);"> · </span>Therapy</a>
+      <nav class="nav" aria-label="Footer">
+        <a href="/">Home</a>
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
+        <a href="privacy.html">Policy</a>
+      </nav>
+      <p class="copyright">© 2026 Tiny Robots</p>
+    </div>
+  </footer>
+
+</body>
+</html>
+    
